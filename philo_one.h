@@ -46,6 +46,7 @@ typedef struct	s_phil
 	struct timeval	time;
 	struct timeval	start_time;
 	struct s_mutex	*mutex;
+	int				num_phil;
 }				t_phil;
 
 /*core function*/

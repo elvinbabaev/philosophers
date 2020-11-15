@@ -3,9 +3,7 @@
 int 	create_thread(t_phil *phil, t_param param)
 {
 	int				i;
-	struct timeval	start_time;
 	pthread_t		*thr;
-	int				status;
 
 	thr = (pthread_t*)malloc(sizeof(pthread_t) * (param.number_of_philosophers));
 	i = -1;
@@ -16,6 +14,7 @@ int 	create_thread(t_phil *phil, t_param param)
 	{
 		gettimeofday(&phil[i].time, NULL);
 		pthread_create(&thr[i], NULL, dinner, &phil[i]);
+		usleep(100);
 	}
 	i = -1;
 	while (++i < param.number_of_philosophers)

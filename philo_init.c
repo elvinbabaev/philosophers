@@ -30,7 +30,7 @@ t_mutex		*mutex_init(t_param param)
 	t_mutex	*mutex;
 	int		j;
 
-	mutex = malloc(sizeof(t_mutex*) * param.number_of_philosophers);
+	mutex = malloc(sizeof(t_mutex*) * (param.number_of_philosophers + 1));
 	j = 0;
 	while (j < param.number_of_philosophers)
 	{
@@ -38,6 +38,8 @@ t_mutex		*mutex_init(t_param param)
 		pthread_mutex_init(mutex[j].mutex, NULL);
 		j++;
 	}
+	mutex[j].mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(mutex[j].mutex, NULL);
 	return (mutex);
 }
 
@@ -61,6 +63,7 @@ t_phil		*phil_init(t_param param)
 		phil[i].num_fork = 0;
 		phil[i].num_must_eat = param.number_of_times_each_philosopher_must_eat;
 		phil[i].mutex = mutex;
+		phil[i].num_phil = param.number_of_philosophers;
 		i++;
 	}
 	return (phil);
