@@ -14,7 +14,7 @@ int 	create_thread(t_phil *phil, t_param param)
 	{
 		gettimeofday(&phil[i].time, NULL);
 		pthread_create(&thr[i], NULL, dinner, &phil[i]);
-		usleep(100);
+//		usleep(100);
 	}
 	i = -1;
 	while (++i < param.number_of_philosophers)
