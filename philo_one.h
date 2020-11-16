@@ -8,16 +8,20 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# define SEC 1000000
+# define SEC_MICRO 1000000
+# define MIL_SEC_MICRO 1000
 # define ERROR 0
 # define SUCCESS 1
 # define TAB "\t"
 # define SIT_DOWN " сел за стол\n"
 # define TAKE_FORK " взял вилку"
-# define DIED " умер\n"
+# define DIED " died\n"
 # define EAT_UP " поел\n"
-# define SLEEP " уснул\n"
-# define THINKS " думает\n"
+# define SLEEP " sleep\n"
+# define THINKS " THINKS\n"
+# define EAT	" eat_up\n"
+# define TAKE_LEFT_FORK " take_left_fork\n"
+# define TAKE_RIGHT_FORK " take_right_fork\n"
 
 typedef struct	s_param
 {
@@ -47,6 +51,8 @@ typedef struct	s_phil
 	struct timeval	start_time;
 	struct s_mutex	*mutex;
 	int				num_phil;
+	struct timeval	last_eat;
+	struct timeval	prev_last_eat;
 }				t_phil;
 
 /*core function*/
@@ -56,7 +62,7 @@ int			param_init(t_param *param, int ac, char **av);
 t_phil		*phil_init(t_param param);
 int			create_thread(t_phil *phil, t_param param);
 void		*dinner(void *argc);
-void		write_msg(int time, int phil, char *msg);
+int			phil_full_msg(int time, int phil, char *msg);
 
 /*utils function*/
 
@@ -65,5 +71,8 @@ int			ft_atoi(const char *str);
 void		ft_putnbr(int n);
 void		ft_putchar(char c);
 void		ft_putstr(const char *s);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_itoa(int n);
+char	*ft_strdup(const char *src);
 
 #endif

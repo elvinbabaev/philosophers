@@ -65,3 +65,104 @@ void	ft_putnbr(int n)
 	else
 		ft_putchar(n + '0');
 }
+
+char		*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(str = (char *)malloc(sizeof(char) *
+							   (ft_strlen(s1) + ft_strlen(s2) + 1))))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[j] != '\0')
+	{
+		str[i] = s1[j++];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strdup(const char *src)
+{
+	int		i;
+	char	*dest;
+
+	i = 0;
+	while (src[i] != '\0')
+		i++;
+	dest = (char*)malloc(sizeof(*src) * (i + 1));
+	if (dest == NULL)
+		return (NULL);
+	else
+	{
+		i = 0;
+		while (src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+		return (dest);
+	}
+}
+
+static int	ft_len(int nb)
+{
+	int		len;
+
+	len = 0;
+	if (nb < 0)
+	{
+		nb = nb * -1;
+		len++;
+	}
+	while (nb > 0)
+	{
+		nb = nb / 10;
+		len++;
+	}
+	return (len);
+}
+
+char		*ft_itoa(int n)
+{
+	char	*num;
+	int		i;
+
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	if (n == 0)
+		return (ft_strdup("0"));
+	i = ft_len(n);
+	if (!(num = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	num[i] = '\0';
+	i--;
+	if (n < 0)
+	{
+		n = (-1) * n;
+		num[0] = '-';
+	}
+	while (n > 0)
+	{
+		num[i] = (n % 10) + '0';
+		n = n / 10;
+		i--;
+	}
+	return (num);
+}
+
+
