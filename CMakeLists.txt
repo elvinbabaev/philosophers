@@ -6,11 +6,11 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(philosophers
-        utils/utils.c
-        dinner.c
-        error.c
-        philo_init.c
-        philo_one.c
-        philo_one.h
-        thread.c
-        write_msg.c)
+        philo_one/utils/utils.c
+        philo_one/dinner.c
+        philo_one/error.c
+        philo_one/philo_init.c
+        philo_one/philo_one.c
+        philo_one/philo_one.h
+        philo_one/thread.c
+        philo_one/write_msg.c)
