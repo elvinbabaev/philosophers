@@ -15,13 +15,14 @@
 # define TAB "\t"
 # define SIT_DOWN " сел за стол\n"
 # define TAKE_FORK " взял вилку"
-# define DIED " died\n"
+# define DIED " DIED\n"
 # define EAT_UP " поел\n"
 # define SLEEP " sleep\n"
 # define THINKS " THINKS\n"
 # define EAT	" eat_up\n"
 # define TAKE_LEFT_FORK " take_left_fork\n"
 # define TAKE_RIGHT_FORK " take_right_fork\n"
+# define EVERYONE_ATE "everyone ate\n"
 
 typedef struct	s_param
 {
@@ -63,6 +64,8 @@ t_phil		*phil_init(t_param param);
 int			create_thread(t_phil *phil, t_param param);
 void		*dinner(void *argc);
 int			phil_full_msg(int time, int phil, char *msg);
+size_t		get_time(struct timeval time_old, struct timeval time_new);
+void		my_usleep(size_t time);
 
 /*utils function*/
 
@@ -73,6 +76,6 @@ void		ft_putchar(char c);
 void		ft_putstr(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_itoa(int n);
-char	*ft_strdup(const char *src);
+char		*ft_strdup(const char *src);
 
 #endif
