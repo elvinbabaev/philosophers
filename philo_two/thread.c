@@ -58,7 +58,6 @@ int		phil_live_check(t_phil *phil, int *id_phil)
 			}
 			i++;
 		}
-		usleep(5);
 	}
 	return (0);
 }
