@@ -36,7 +36,7 @@ typedef struct	s_param
 
 typedef struct	s_semaphore
 {
-	sem_t		semaphore;
+	sem_t		*semaphore;
 }				t_semaphore;
 
 typedef struct	s_phil

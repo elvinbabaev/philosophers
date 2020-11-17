@@ -10,19 +10,19 @@ void	phil_take_fork(t_phil *phil)
 {
 	if (phil->phil_id != 1)
 	{
-		pthread_mutex_lock(phil->mutex[phil->phil_id - 1].mutex);
+		sem_wait(phil->semaphore->semaphore);
 		action(phil, TAKE_LEFT_FORK);
 		phil->num_fork += 1;
-		pthread_mutex_lock(phil->mutex[phil->phil_id - 2].mutex);
+		sem_wait(phil->semaphore->semaphore);
 		action(phil, TAKE_RIGHT_FORK);
 		phil->num_fork += 1;
 	}
 	else
 	{
-		pthread_mutex_lock(phil->mutex[phil->num_phil - 1].mutex);
+		sem_wait(phil->semaphore->semaphore);
 		action(phil, TAKE_RIGHT_FORK);
 		phil->num_fork += 1;
-		pthread_mutex_lock(phil->mutex[phil->phil_id - 1].mutex);
+		sem_wait(phil->semaphore->semaphore);
 		action(phil, TAKE_LEFT_FORK);
 		phil->num_fork += 1;
 	}
@@ -45,10 +45,10 @@ void	phil_throw_fork_sleep(t_phil *phil)
 	{
 		if (phil->phil_id != 1)
 		{
-			pthread_mutex_unlock(phil->mutex[phil->phil_id - 1].mutex);
+			sem_post(phil->semaphore->semaphore);
 			action(phil, TAKE_LEFT_FORK);
 			phil->num_fork -= 1;
-			pthread_mutex_unlock(phil->mutex[phil->phil_id - 2].mutex);
+			sem_post(phil->semaphore->semaphore);
 			action(phil, TAKE_RIGHT_FORK);
 			phil->num_fork -= 1;
 			action(phil, SLEEP);
@@ -56,10 +56,10 @@ void	phil_throw_fork_sleep(t_phil *phil)
 		}
 		else
 		{
-			pthread_mutex_unlock(phil->mutex[phil->phil_id - 1].mutex);
+			sem_post(phil->semaphore->semaphore);
 			action(phil, TAKE_RIGHT_FORK);
 			phil->num_fork -= 1;
-			pthread_mutex_unlock(phil->mutex[phil->num_phil - 1].mutex);
+			sem_post(phil->semaphore->semaphore);
 			action(phil, TAKE_LEFT_FORK);
 			phil->num_fork -= 1;
 			action(phil, SLEEP);

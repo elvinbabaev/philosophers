@@ -88,6 +88,7 @@ int 	create_thread(t_phil *phil, t_param param)
 		return (ERROR);
 	}
 	ft_putstr(EVERYONE_ATE);
+	sem_close(phil->semaphore->semaphore);
 //	i = -1;
 //	while (++i < param.number_of_philosophers)
 //		pthread_join(thr[i], NULL);
