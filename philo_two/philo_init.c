@@ -29,12 +29,12 @@ t_phil		*phil_init(t_param param)
 {
 	t_phil	*phil;
 	int		i;
-	t_semaphore	semaphore;
-	char *sem_name;
+//	t_semaphore	semaphore;
+//	char *sem_name;
 
-	sem_name = ft_strdup("sem");
-	sem_unlink(sem_name);
-	semaphore.semaphore = sem_open(sem_name, O_CREAT | O_EXCL, 0644, param.number_of_philosophers);
+//	sem_name = ft_strdup("sem");
+//	sem_unlink(sem_name);
+//	semaphore.semaphore = sem_open(sem_name, O_CREAT | O_EXCL, 0644, param.number_of_philosophers);
 	if (!(phil = (t_phil*)malloc(sizeof(t_phil) * param.number_of_philosophers)))
 		return (ERROR);
 	i = 0;
@@ -48,7 +48,7 @@ t_phil		*phil_init(t_param param)
 		phil[i].num_eat = 0;
 		phil[i].num_fork = 0;
 		phil[i].num_must_eat = param.number_of_times_each_philosopher_must_eat;
-		phil[i].semaphore = &semaphore;
+//		phil[i].semaphore = &semaphore;
 		phil[i].num_phil = param.number_of_philosophers;
 		i++;
 	}

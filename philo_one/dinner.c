@@ -46,10 +46,10 @@ void	phil_throw_fork_sleep(t_phil *phil)
 		if (phil->phil_id != 1)
 		{
 			pthread_mutex_unlock(phil->mutex[phil->phil_id - 1].mutex);
-			action(phil, TAKE_LEFT_FORK);
+			action(phil, DROPPED_THE_LEFT_FORK);
 			phil->num_fork -= 1;
 			pthread_mutex_unlock(phil->mutex[phil->phil_id - 2].mutex);
-			action(phil, TAKE_RIGHT_FORK);
+			action(phil, DROPPED_THE_RIGHT_FORK);
 			phil->num_fork -= 1;
 			action(phil, SLEEP);
 			my_usleep(phil->time_to_sleep * MIL_SEC_MICRO);
@@ -57,10 +57,10 @@ void	phil_throw_fork_sleep(t_phil *phil)
 		else
 		{
 			pthread_mutex_unlock(phil->mutex[phil->phil_id - 1].mutex);
-			action(phil, TAKE_RIGHT_FORK);
+			action(phil, DROPPED_THE_RIGHT_FORK);
 			phil->num_fork -= 1;
 			pthread_mutex_unlock(phil->mutex[phil->num_phil - 1].mutex);
-			action(phil, TAKE_LEFT_FORK);
+			action(phil, DROPPED_THE_LEFT_FORK);
 			phil->num_fork -= 1;
 			action(phil, SLEEP);
 			my_usleep(phil->time_to_sleep * MIL_SEC_MICRO);

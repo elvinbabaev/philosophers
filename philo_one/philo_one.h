@@ -23,6 +23,8 @@
 # define TAKE_LEFT_FORK " take_left_fork\n"
 # define TAKE_RIGHT_FORK " take_right_fork\n"
 # define EVERYONE_ATE "everyone ate\n"
+# define DROPPED_THE_LEFT_FORK " dropped the left fork\n"
+# define DROPPED_THE_RIGHT_FORK " dropped the RIGHT fork\n"
 
 typedef struct	s_param
 {
