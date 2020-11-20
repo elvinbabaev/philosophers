@@ -19,18 +19,18 @@ int		phil_must_eat(t_phil *phil)
 	return (1);
 }
 
-void	print_int(int a, int b)
-{
-	char *a_str;
-	char *b_str;
+//void	print_int(int a, int b)
+//{
+//	char *a_str;
+//	char *b_str;
 
-	a_str = ft_itoa(a);
-	b_str = ft_itoa(b);
-	a_str = ft_strjoin(a_str, "||");
-	a_str = ft_strjoin(a_str, b_str);
-	a_str = ft_strjoin(a_str, "\n");
-	write(1, a_str, ft_strlen(a_str));
-}
+//	a_str = ft_itoa(a);
+//	b_str = ft_itoa(b);
+//	a_str = ft_strjoin(a_str, "||");
+//	a_str = ft_strjoin(a_str, b_str);
+//	a_str = ft_strjoin(a_str, "\n");
+//	write(1, a_str, ft_strlen(a_str));
+//}
 
 //
 
@@ -106,15 +106,16 @@ int 	create_thread(t_phil *phil, t_param param)
 	{
 		sem_wait(g_semaphore_msg);
 		gettimeofday(&phil->time, NULL);
+		ft_putstr(RED);
 		phil_full_msg(get_time(phil->start_time, phil->time), id_phil, DIED);
 		return (ERROR);
 	}
 	else
 	{
 		sem_wait(g_semaphore_msg);
+		ft_putstr(YELLOW);
 		ft_putstr(EVERYONE_ATE);
 	}
-
 //	sem_close(g_semaphore);
 //	sem_close(g_semaphore_msg);
 //	i = -1;

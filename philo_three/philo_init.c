@@ -1,4 +1,4 @@
-#include "philo_two.h"
+#include "philo_three.h"
 
 int		param_init(t_param *param, int ac, char **av)
 {

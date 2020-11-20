@@ -1,4 +1,4 @@
-#include "philo_two.h"
+#include "philo_three.h"
 
 static void		printer(char *s)
 {

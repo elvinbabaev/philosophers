@@ -1,4 +1,4 @@
-#include "philo_two.h"
+#include "philo_three.h"
 
 void		my_usleep(size_t time)
 {
@@ -48,6 +48,7 @@ int	main(int ac, char **av)
 	param_init(&param, ac, av);
 	phil = phil_init(param);
 	ft_sem_init(param);
+	phil_fork(param, phil);
 	return (0);
 }
 

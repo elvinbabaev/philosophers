@@ -1,6 +1,6 @@
-NAME = philo_two
+NAME = philo_three
 
-INC = philo_two.h
+INC = philo_three.h
 
 SRC = error.c philo_init.c philo_three.c \
 		utils/utils.c thread.c dinner.c write_msg.c
