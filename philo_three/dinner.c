@@ -83,6 +83,8 @@ void	*dinner(void *argc)
 		phil_throw_fork_sleep(phil);
 		if (!phil->die)
 			break;
+		if (phil->num_must_eat == phil->num_eat)
+			break;
 	}
 	return (0);
 }

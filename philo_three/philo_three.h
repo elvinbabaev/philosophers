@@ -30,6 +30,8 @@
 # define DROPPED_THE_RIGHT_FORK " dropped the RIGHT fork\n"
 # define NAME_SEMAPHORE "semaph"
 # define NAME_SEMAPHORE_MSG "sem_msg"
+# define NAME_SEMAPHORE_END "sem_end"
+
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */
 # define RED     "\033[31m"      /* Red */
@@ -89,7 +91,7 @@ int			phil_full_msg(int time, int phil, char *msg);
 size_t		get_time(struct timeval time_old, struct timeval time_new);
 void		my_usleep(size_t time);
 int			phil_fork(t_param param, t_phil *phil);
-
+int			looking_after_the_phil(t_phil *phil);
 /*utils function*/
 
 size_t		ft_strlen(const char *s);
@@ -100,6 +102,6 @@ void		ft_putstr(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_itoa(int n);
 char		*ft_strdup(const char *src);
-void		print_int(int a, int b);
+//void		print_int(int a, int b);
 
 #endif

@@ -16,6 +16,18 @@ void		my_usleep(size_t time)
 	}
 }
 
+int		ft_sem_end(void)
+{
+	char	*sem_msg;
+
+	if (!(sem_msg = ft_strdup(NAME_SEMAPHORE_END)))
+		return (ERROR);
+	sem_unlink(sem_msg);
+	g_semaphore_end = (sem_t*)malloc(sizeof(sem_t));
+	g_semaphore_end = sem_open(sem_msg, O_CREAT | O_EXCL, 0644, 0);
+	return (SUCCESS);
+}
+
 int		ft_sem_init_msg(void)
 {
 	char	*sem_msg;
@@ -25,7 +37,7 @@ int		ft_sem_init_msg(void)
 	sem_unlink(sem_msg);
 	g_semaphore_msg = (sem_t*)malloc(sizeof(sem_t));
 	g_semaphore_msg = sem_open(sem_msg, O_CREAT | O_EXCL, 0644, 1);
-	return (SUCCESS);
+	return (ft_sem_end());
 }
 
 int			ft_sem_init(t_param param)
