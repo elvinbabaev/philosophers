@@ -55,6 +55,17 @@ sem_t	*g_semaphore;
 sem_t	*g_semaphore_msg;
 sem_t	*g_semaphore_end;
 
+typedef enum	e_colour
+{
+	Reset = 0,
+	Green = 1,
+	White = 2,
+	Magenta = 3,
+	Cyan = 4,
+	BoldYellow = 5,
+	Bolded = 6
+}				t_colour;
+
 typedef struct	s_param
 {
 	int		number_of_philosophers;
@@ -92,6 +103,7 @@ size_t		get_time(struct timeval time_old, struct timeval time_new);
 void		my_usleep(size_t time);
 int			phil_fork(t_param param, t_phil *phil);
 int			looking_after_the_phil(t_phil *phil);
+void		action(t_phil *phil, char *act, t_colour color);
 /*utils function*/
 
 size_t		ft_strlen(const char *s);

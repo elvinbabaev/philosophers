@@ -18,13 +18,11 @@ int		looking_after_the_phil(t_phil *phil)
 		else if ((get_time(phil->last_eat, present_time)) > phil->time_to_die)
 		{
 			phil->die = 0;
-			printf("%d %d\n", phil->phil_id, 0);				/////???????????
 //			phil_full_msg(get_time(phil->start_time, present_time), phil->phil_id, DIED);
 			return (ERROR);
 		}
 		else if (phil->num_eat == phil->num_must_eat)
 		{
-			printf("%d %d\n", phil->phil_id, 1);				/////???????????
 			return (SUCCESS);
 		}
 	}
@@ -41,8 +39,21 @@ int		dinner_phil_child(t_phil phil)
 	phil.time = phil.start_time;
 	pthread_create(&pthr, NULL, dinner, &phil);
 	status = looking_after_the_phil(&phil);
+	if (phil.num_fork >= 1)
+	{
+		sem_post(g_semaphore);
+		if (phil.num_fork == 2)
+			sem_post(g_semaphore);
+	}
 	if (!status)
+	{
+		gettimeofday(&phil.time, NULL);
+//		action(&phil, DIED, Bolded);
+		ft_putstr(BOLDRED);
+		sem_wait(g_semaphore_msg);
+		phil_full_msg(get_time(phil.start_time, phil.time), phil.phil_id, DIED);
 		exit(ERROR);
+	}
 	exit(SUCCESS);
 }
 
@@ -80,7 +91,6 @@ int		phil_fork(t_param param, t_phil *phil)
 		if (WEXITSTATUS(status) == 1)
 		{
 			j++;
-//			write(1, "qwerty\n", 7);
 			if (j == phil->num_phil)
 			{
 				sem_wait(g_semaphore_msg);
@@ -90,7 +100,8 @@ int		phil_fork(t_param param, t_phil *phil)
 		}
 		else
 		{
-			while (i < param.number_of_philosophers) {
+			while (i < param.number_of_philosophers)
+			{
 				kill(phil_pid[i++], SIGKILL);
 			}
 			return (ERROR);

@@ -30,7 +30,7 @@ t_mutex		*mutex_init(t_param param)
 	t_mutex	*mutex;
 	int		j;
 
-	if (!(mutex = malloc(sizeof(t_mutex*) * (param.number_of_philosophers + 1))))
+	if (!(mutex = (t_mutex*)malloc(sizeof(mutex) * (param.number_of_philosophers + 1))))
 		return (ERROR);
 	j = 0;
 	while (j < param.number_of_philosophers)
