@@ -23,24 +23,12 @@ void	action(t_phil *phil, char *act, int color)
 
 void	phil_take_fork(t_phil *phil)
 {
-	if (phil->phil_id != 1)
-	{
-		sem_wait(g_semaphore);
-		action(phil, TAKE_LEFT_FORK, 3);
-		phil->num_fork += 1;
-		sem_wait(g_semaphore);
-		action(phil, TAKE_RIGHT_FORK, 3);
-		phil->num_fork += 1;
-	}
-	else
-	{
-		sem_wait(g_semaphore);
-		action(phil, TAKE_RIGHT_FORK, 3);
-		phil->num_fork += 1;
-		sem_wait(g_semaphore);
-		action(phil, TAKE_LEFT_FORK, 3);
-		phil->num_fork += 1;
-	}
+	sem_wait(g_semaphore);
+	action(phil, TAKE_LEFT_FORK, 3);
+	phil->num_fork += 1;
+	sem_wait(g_semaphore);
+	action(phil, TAKE_RIGHT_FORK, 3);
+	phil->num_fork += 1;
 }
 
 void	phil_eat(t_phil *phil)
@@ -58,28 +46,14 @@ void	phil_throw_fork_sleep(t_phil *phil)
 {
 	if (phil->num_fork == 2)
 	{
-		if (phil->phil_id != 1)
-		{
-			sem_post(g_semaphore);
-			action(phil, DROPPED_THE_LEFT_FORK, 4);
-			phil->num_fork -= 1;
-			sem_post(g_semaphore);
-			action(phil, DROPPED_THE_RIGHT_FORK, 4);
-			phil->num_fork -= 1;
-			action(phil, SLEEP, 2);
-			my_usleep(phil->time_to_sleep * MIL_SEC_MICRO);
-		}
-		else
-		{
-			sem_post(g_semaphore);
-			action(phil, DROPPED_THE_RIGHT_FORK, 4);
-			phil->num_fork -= 1;
-			sem_post(g_semaphore);
-			action(phil, DROPPED_THE_LEFT_FORK, 4);
-			phil->num_fork -= 1;
-			action(phil, SLEEP, 2);
-			my_usleep(phil->time_to_sleep * MIL_SEC_MICRO);
-		}
+		sem_post(g_semaphore);
+		action(phil, DROPPED_THE_LEFT_FORK, 4);
+		phil->num_fork -= 1;
+		sem_post(g_semaphore);
+		action(phil, DROPPED_THE_RIGHT_FORK, 4);
+		phil->num_fork -= 1;
+		action(phil, SLEEP, 2);
+		my_usleep(phil->time_to_sleep * MIL_SEC_MICRO);
 	}
 }
 
