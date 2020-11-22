@@ -51,7 +51,6 @@ int		phil_live_time(t_phil *phil)
 		if (time_int > phil[i].time_to_die && (phil[i].num_fork != 2 ||
 		(phil[i].num_fork == 2 && phil[i].time_to_eat < phil[i].time_to_die)))
 		{
-//			print_int(time_int, phil[i].time_to_die);
 			phil[i].die = 0;
 			return (0);
 		}
@@ -116,10 +115,6 @@ int 	create_thread(t_phil *phil, t_param param)
 		ft_putstr(YELLOW);
 		ft_putstr(EVERYONE_ATE);
 	}
-//	sem_close(g_semaphore);
-//	sem_close(g_semaphore_msg);
-//	i = -1;
-//	while (++i < param.number_of_philosophers)
-//		pthread_join(thr[i], NULL);
+	free(thr);
 	return (SUCCESS);
 }
