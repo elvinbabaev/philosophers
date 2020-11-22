@@ -20,11 +20,12 @@ int		ft_sem_end(void)
 {
 	char	*sem_msg;
 
-	if (!(sem_msg = ft_strdup(NAME_SEMAPHORE_END)))
+	//if (!(sem_msg = ft_strdup(NAME_SEMAPHORE_END)))
+	//	return (ERROR);
+	sem_unlink(NAME_SEMAPHORE_END);
+	if (!(g_semaphore_end = (sem_t*)malloc(sizeof(sem_t))))
 		return (ERROR);
-	sem_unlink(sem_msg);
-	g_semaphore_end = (sem_t*)malloc(sizeof(sem_t));
-	g_semaphore_end = sem_open(sem_msg, O_CREAT | O_EXCL, 0644, 0);
+	g_semaphore_end = sem_open(NAME_SEMAPHORE_END, O_CREAT | O_EXCL, 0644, 0);
 	return (SUCCESS);
 }
 
@@ -32,11 +33,12 @@ int		ft_sem_init_msg(void)
 {
 	char	*sem_msg;
 
-	if (!(sem_msg = ft_strdup(NAME_SEMAPHORE_MSG)))
+	//if (!(sem_msg = ft_strdup(NAME_SEMAPHORE_MSG)))
+	//	return (ERROR);
+	sem_unlink(NAME_SEMAPHORE_MSG);
+	if (!(g_semaphore_msg = (sem_t*)malloc(sizeof(sem_t))))
 		return (ERROR);
-	sem_unlink(sem_msg);
-	g_semaphore_msg = (sem_t*)malloc(sizeof(sem_t));
-	g_semaphore_msg = sem_open(sem_msg, O_CREAT | O_EXCL, 0644, 1);
+	g_semaphore_msg = sem_open(NAME_SEMAPHORE_MSG, O_CREAT | O_EXCL, 0644, 1);
 	return (ft_sem_end());
 }
 
@@ -44,11 +46,12 @@ int			ft_sem_init(t_param param)
 {
 	char	*sem;
 
-	if (!(sem = ft_strdup(NAME_SEMAPHORE)))
+	//if (!(sem = ft_strdup(NAME_SEMAPHORE)))
+	//	return (ERROR);
+	sem_unlink(NAME_SEMAPHORE);
+	if (!(g_semaphore = (sem_t*)malloc(sizeof(sem_t))))
 		return (ERROR);
-	sem_unlink(sem);
-	g_semaphore = (sem_t*)malloc(sizeof(sem_t));
-	g_semaphore = sem_open(sem, O_CREAT | O_EXCL, 0644, param.number_of_philosophers);
+	g_semaphore = sem_open(NAME_SEMAPHORE, O_CREAT | O_EXCL, 0644, param.number_of_philosophers);
 	return (ft_sem_init_msg());
 }
 

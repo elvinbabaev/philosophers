@@ -28,6 +28,9 @@ int		phil_live_time(t_phil *phil)
 	while (i < phil->num_phil)
 	{
 		gettimeofday(&present_time, NULL);
+		if (present_time.tv_sec * 1000 + present_time.tv_usec / 1000
+		- phil->last_eat.tv_sec * 1000 - phil->last_eat.tv_usec / 1000 < 0)
+			continue;
 		if (get_time(phil[i].last_eat, present_time) > phil[i].time_to_die)
 		{
 			phil[i].die = 0;
@@ -58,7 +61,6 @@ int		phil_live_check(t_phil *phil, int *id_phil)
 			}
 			i++;
 		}
-		usleep(5);
 	}
 	return (0);
 }
@@ -83,13 +85,9 @@ int 	create_thread(t_phil *phil, t_param param)
 	}
 	if (!(phil_live_check(phil, &id_phil)))
 	{
-		gettimeofday(&phil->time, NULL);
-		phil_full_msg(get_time(phil->start_time, phil->time), id_phil, DIED);
+		printer_phil_died(phil, id_phil);
 		return (ERROR);
 	}
-	ft_putstr(EVERYONE_ATE);
-//	i = -1;
-//	while (++i < param.number_of_philosophers)
-//		pthread_join(thr[i], NULL);
+	printer_every_eat(phil);
 	return (SUCCESS);
 }

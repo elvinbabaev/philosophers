@@ -44,6 +44,17 @@
 # define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 # define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
+typedef enum	e_colour
+{
+	Reset = 0,
+	Green = 1,
+	White = 2,
+	Magenta = 3,
+	Cyan = 4,
+	BoldYellow = 5,
+	Bolded = 6
+}				t_colour;
+
 typedef struct	s_param
 {
 	int		number_of_philosophers;
@@ -85,6 +96,8 @@ void		*dinner(void *argc);
 int			phil_full_msg(int time, int phil, char *msg);
 size_t		get_time(struct timeval time_old, struct timeval time_new);
 void		my_usleep(size_t time);
+void		printer_every_eat(t_phil *phil);
+void		printer_phil_died(t_phil *phil, int id_phil);
 
 /*utils function*/
 

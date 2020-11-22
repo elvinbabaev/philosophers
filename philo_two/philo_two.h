@@ -48,7 +48,17 @@
 
 sem_t	*g_semaphore;
 sem_t	*g_semaphore_msg;
-sem_t	*g_semaphore_end;
+
+typedef enum	e_colour
+{
+	Reset = 0,
+	Green = 1,
+	White = 2,
+	Magenta = 3,
+	Cyan = 4,
+	BoldYellow = 5,
+	Bolded = 6
+}				t_colour;
 
 typedef struct	s_param
 {
