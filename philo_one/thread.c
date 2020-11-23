@@ -37,15 +37,17 @@ int			phil_live_time(t_phil *phil)
 {
 	int				i;
 	struct timeval	present_time;
+	int				this_time;
 
 	i = 0;
 	while (i < phil->num_phil)
 	{
 		gettimeofday(&present_time, NULL);
+		this_time = get_time(phil[i].last_eat, present_time);
 		if (present_time.tv_sec * 1000 + present_time.tv_usec / 1000
 		- phil->last_eat.tv_sec * 1000 - phil->last_eat.tv_usec / 1000 < 0)
 			continue;
-		if (get_time(phil[i].last_eat, present_time) > phil[i].time_to_die)
+		if (this_time > phil[i].time_to_die)
 		{
 			phil[i].die = 0;
 			return (0);

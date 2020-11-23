@@ -18,6 +18,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <stdio.h>
 
 # define SEC_MICRO 1000000
 # define MIL_SEC_MICRO 1000
