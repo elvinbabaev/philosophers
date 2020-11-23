@@ -38,7 +38,8 @@ int			main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if (!(phil = phil_init(param)))
 		return (EXIT_FAILURE);
-	create_thread(phil, param, 0);
+	if (!(create_thread(phil, param, 0)))
+		return (EXIT_FAILURE);
 	free(phil);
 	return (0);
 }
