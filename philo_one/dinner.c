@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dinner.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 16:02:55 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 16:02:57 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
 void	action(t_phil *phil, char *act, t_colour color)
@@ -86,7 +98,8 @@ void	phil_throw_fork_sleep(t_phil *phil)
 void	*dinner(void *argc)
 {
 	t_phil *phil;
-	phil = (t_phil *) argc;
+
+	phil = (t_phil *)argc;
 	if (phil->phil_id % 2 != 1)
 		usleep(100);
 	while (1)
@@ -95,7 +108,7 @@ void	*dinner(void *argc)
 		phil_eat(phil);
 		phil_throw_fork_sleep(phil);
 		if (!phil->die)
-			break;
+			break ;
 	}
 	return (0);
 }

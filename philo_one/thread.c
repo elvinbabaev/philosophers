@@ -1,11 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 16:17:06 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 16:17:07 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
 size_t		get_time(struct timeval time_old, struct timeval time_new)
 {
-	return ((size_t)((time_new.tv_sec * 1000) - (time_old.tv_sec * 1000) + (time_new.tv_usec / 1000) - (time_old.tv_usec / 1000)));
+	return ((size_t)((time_new.tv_sec * 1000) -
+	(time_old.tv_sec * 1000) + (time_new.tv_usec / 1000)
+	- (time_old.tv_usec / 1000)));
 }
 
-int		phil_must_eat(t_phil *phil)
+int			phil_must_eat(t_phil *phil)
 {
 	int	i;
 
@@ -19,9 +33,9 @@ int		phil_must_eat(t_phil *phil)
 	return (1);
 }
 
-int		phil_live_time(t_phil *phil)
+int			phil_live_time(t_phil *phil)
 {
-	int	i;
+	int				i;
 	struct timeval	present_time;
 
 	i = 0;
@@ -41,7 +55,7 @@ int		phil_live_time(t_phil *phil)
 	return (1);
 }
 
-int		phil_live_check(t_phil *phil, int *id_phil)
+int			phil_live_check(t_phil *phil, int *id_phil)
 {
 	int	i;
 
@@ -65,13 +79,13 @@ int		phil_live_check(t_phil *phil, int *id_phil)
 	return (0);
 }
 
-int 	create_thread(t_phil *phil, t_param param)
+int			create_thread(t_phil *phil, t_param param, int i)
 {
-	int				i;
 	pthread_t		*thr;
 	int				id_phil;
 
-	if (!(thr = (pthread_t*)malloc(sizeof(pthread_t) * (param.number_of_philosophers))))
+	if (!(thr = (pthread_t*)malloc(sizeof(pthread_t)
+	* (param.number_of_philosophers))))
 		return (ERROR);
 	i = -1;
 	while (++i < param.number_of_philosophers)
@@ -86,8 +100,10 @@ int 	create_thread(t_phil *phil, t_param param)
 	if (!(phil_live_check(phil, &id_phil)))
 	{
 		printer_phil_died(phil, id_phil);
+		free(thr);
 		return (ERROR);
 	}
 	printer_every_eat(phil);
+	free(thr);
 	return (SUCCESS);
 }
