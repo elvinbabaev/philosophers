@@ -44,6 +44,7 @@
 # define NAME_SEMAPHORE_MSG "sem_msg"
 # define NAME_SEMAPHORE_END "sem_end"
 # define ERROR_ARG "wrong number of arguments\n"
+# define ARG_ERROR "wrong arguments\n"
 
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"

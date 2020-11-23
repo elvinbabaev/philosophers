@@ -67,7 +67,7 @@ int					dinner_phil_child(t_phil phil)
 		gettimeofday(&phil.time, NULL);
 		ft_putstr(BOLDRED);
 		sem_wait(g_semaphore_msg);
-		phil_full_msg(get_time(phil.start_time, phil.time), phil.phil_id, DIED);
+		phil_full_msg(get_time(phil.start_time, phil.time), phil.phil_id, DIED);//
 		exit(ERROR);
 	}
 	exit(SUCCESS);

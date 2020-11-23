@@ -38,6 +38,7 @@
 # define DROPPED_THE_LEFT_FORK " dropped the left fork\n"
 # define DROPPED_THE_RIGHT_FORK " dropped the RIGHT fork\n"
 # define ERROR_ARG "wrong number of arguments\n"
+# define ARG_ERROR "wrong arguments\n"
 
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"

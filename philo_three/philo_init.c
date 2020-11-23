@@ -29,11 +29,14 @@ int			param_init(t_param *param, int ac, char **av)
 		ft_error(ERROR_ARG);
 		return (ERROR);
 	}
-	if (param->number_of_philosophers < 0 || param->time_to_die < 0
-	|| param->time_to_eat < 0 || param->time_to_sleep < 0 ||
+	if (param->number_of_philosophers <= 0 || param->time_to_die <= 0
+	|| param->time_to_eat <= 0 || param->time_to_sleep <= 0 ||
 	(param->number_of_times_each_philosopher_must_eat != -1
-	&& param->number_of_times_each_philosopher_must_eat < 0))
+	&& param->number_of_times_each_philosopher_must_eat <= 0))
+	{
+		ft_error(ARG_ERROR);
 		return (ERROR);
+	}
 	return (SUCCESS);
 }
 
