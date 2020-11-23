@@ -1,35 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fork_phil.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 20:25:48 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 20:25:49 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_three.h"
 
-size_t		get_time(struct timeval time_old, struct timeval time_new)
+long long int		get_time(struct timeval time_old, struct timeval time_new)
 {
-	return (((size_t)(time_new.tv_sec * 1000) - (size_t)(time_old.tv_sec * 1000) + (size_t)(time_new.tv_usec / 1000) - (size_t)(time_old.tv_usec / 1000)));
+	return (((time_new.tv_sec * 1000) - (time_old.tv_sec * 1000)
+	+ (time_new.tv_usec / 1000) - (time_old.tv_usec / 1000)));
 }
 
-int		looking_after_the_phil(t_phil *phil)
+int					looking_after_the_phil(t_phil *phil)
 {
-	struct timeval present_time;
+	struct timeval	present_time;
+	struct timeval	last_eat;
+	long long int	time_int;
 
 	while (1)
 	{
-		gettimeofday(&present_time, NULL);
-		if (present_time.tv_sec * 1000 + present_time.tv_usec / 1000
-		- phil->last_eat.tv_sec * 1000 - phil->last_eat.tv_usec / 1000 < 0)
+		last_eat = phil->last_eat;
+		if (gettimeofday(&present_time, NULL) == -1)
 			continue;
-		else if ((get_time(phil->last_eat, present_time)) > phil->time_to_die)
+		time_int = get_time(last_eat, present_time);
+		if (time_int == 1000)
+			continue;
+		if (present_time.tv_sec * 1000 + present_time.tv_usec / 1000
+		- last_eat.tv_sec * 1000 - last_eat.tv_usec / 1000 < 0)
+			continue;
+		if (time_int > phil->time_to_die)
 		{
 			phil->die = 0;
-//			phil_full_msg(get_time(phil->start_time, present_time), phil->phil_id, DIED);
 			return (ERROR);
 		}
 		else if (phil->num_eat == phil->num_must_eat)
-		{
 			return (SUCCESS);
-		}
 	}
 	return (SUCCESS);
 }
 
-int		dinner_phil_child(t_phil phil)
+int					dinner_phil_child(t_phil phil)
 {
 	pthread_t	pthr;
 	int			status;
@@ -48,7 +65,6 @@ int		dinner_phil_child(t_phil phil)
 	if (!status)
 	{
 		gettimeofday(&phil.time, NULL);
-//		action(&phil, DIED, Bolded);
 		ft_putstr(BOLDRED);
 		sem_wait(g_semaphore_msg);
 		phil_full_msg(get_time(phil.start_time, phil.time), phil.phil_id, DIED);
@@ -57,14 +73,42 @@ int		dinner_phil_child(t_phil phil)
 	exit(SUCCESS);
 }
 
-int		phil_fork(t_param param, t_phil *phil)
+int					phil_died_or_ate(t_phil *phil,
+					int i, int j, pid_t *phil_pid)
+{
+	int	status;
+
+	while (1)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == 1)
+		{
+			j++;
+			if (j == phil->num_phil)
+			{
+				sem_wait(g_semaphore_msg);
+				ft_putstr(EVERYONE_ATE);
+				free(phil_pid);
+				return (SUCCESS);
+			}
+		}
+		else
+		{
+			while (i < phil->num_phil)
+				kill(phil_pid[i++], SIGKILL);
+			free(phil_pid);
+			return (ERROR);
+		}
+	}
+}
+
+int					phil_fork(t_param param, t_phil *phil)
 {
 	int		i;
-	int		j;
-	int		status;
 	pid_t	*phil_pid;
 
-	if (!(phil_pid = (pid_t*)malloc(sizeof(pid_t) * param.number_of_philosophers)))
+	if (!(phil_pid = (pid_t*)malloc(sizeof(pid_t)
+	* param.number_of_philosophers)))
 		return (ERROR);
 	i = 0;
 	while (i < param.number_of_philosophers)
@@ -81,30 +125,7 @@ int		phil_fork(t_param param, t_phil *phil)
 			return (ERROR);
 	}
 	i = -1;
-	while(++i < param.number_of_philosophers)
+	while (++i < param.number_of_philosophers)
 		sem_post(g_semaphore_end);
-	j = 0;
-	i = 0;
-	while (1)
-	{
-		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == 1)
-		{
-			j++;
-			if (j == phil->num_phil)
-			{
-				sem_wait(g_semaphore_msg);
-				ft_putstr(EVERYONE_ATE);
-				exit(SUCCESS);
-			}
-		}
-		else
-		{
-			while (i < param.number_of_philosophers)
-			{
-				kill(phil_pid[i++], SIGKILL);
-			}
-			return (ERROR);
-		}
-	}
+	return (phil_died_or_ate(phil, 0, 0, phil_pid));
 }

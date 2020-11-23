@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dinner.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 19:55:31 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 19:55:34 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_two.h"
-/*green eat 1 || white sleep 2 || MAGENTA take fork 3 || CYAN drop fork 4|| Bold Yellow every eat 0 || Bold Red died -1 */
+
 void	action(t_phil *phil, char *act, t_colour color)
 {
 	sem_wait(g_semaphore_msg);
@@ -60,7 +72,8 @@ void	phil_throw_fork_sleep(t_phil *phil)
 void	*dinner(void *argc)
 {
 	t_phil *phil;
-	phil = (t_phil *) argc;
+
+	phil = (t_phil *)argc;
 	if (phil->phil_id % 2 != 1)
 		usleep(100);
 	while (1)
@@ -69,7 +82,7 @@ void	*dinner(void *argc)
 		phil_eat(phil);
 		phil_throw_fork_sleep(phil);
 		if (!phil->die)
-			break;
+			break ;
 	}
 	return (0);
 }

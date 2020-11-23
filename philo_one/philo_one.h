@@ -109,7 +109,7 @@ t_phil				*phil_init(t_param param);
 int					create_thread(t_phil *phil, t_param param, int i);
 void				*dinner(void *argc);
 int					phil_full_msg(int time, int phil, char *msg);
-size_t				get_time(struct timeval time_old, struct timeval time_new);
+long long int		get_time(struct timeval time_old, struct timeval time_new);
 void				my_usleep(size_t time);
 void				printer_every_eat(t_phil *phil);
 void				printer_phil_died(t_phil *phil, int id_phil);

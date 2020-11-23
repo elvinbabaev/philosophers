@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dinner.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 20:25:36 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 20:25:37 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_three.h"
 
 /*
@@ -65,7 +77,8 @@ void	phil_throw_fork_sleep(t_phil *phil)
 void	*dinner(void *argc)
 {
 	t_phil *phil;
-	phil = (t_phil *) argc;
+
+	phil = (t_phil *)argc;
 	if (phil->phil_id % 2 != 1)
 		usleep(100);
 	while (1)
@@ -74,9 +87,9 @@ void	*dinner(void *argc)
 		phil_eat(phil);
 		phil_throw_fork_sleep(phil);
 		if (!phil->die)
-			break;
+			break ;
 		if (phil->num_must_eat == phil->num_eat)
-			break;
+			break ;
 	}
 	return (0);
 }

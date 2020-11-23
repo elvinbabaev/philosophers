@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avallie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/23 20:26:32 by avallie           #+#    #+#             */
+/*   Updated: 2020/11/23 20:26:34 by avallie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_THREE_H
 # define PHILO_THREE_H
 
@@ -31,31 +43,31 @@
 # define NAME_SEMAPHORE "semaph"
 # define NAME_SEMAPHORE_MSG "sem_msg"
 # define NAME_SEMAPHORE_END "sem_end"
+# define ERROR_ARG "wrong number of arguments\n"
 
 # define RESET   "\033[0m"
-# define BLACK   "\033[30m"      /* Black */
-# define RED     "\033[31m"      /* Red */
-# define GREEN   "\033[32m"      /* Green */
-# define YELLOW  "\033[33m"      /* Yellow */
-# define BLUE    "\033[34m"      /* Blue */
-# define MAGENTA "\033[35m"      /* Magenta */
-# define CYAN    "\033[36m"      /* Cyan */
-# define WHITE   "\033[37m"      /* White */
-# define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
-# define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
-# define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
-# define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
-# define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
-# define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
-# define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
-# define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+# define BLACK   "\033[30m"
+# define RED     "\033[31m"
+# define GREEN   "\033[32m"
+# define YELLOW  "\033[33m"
+# define BLUE    "\033[34m"
+# define MAGENTA "\033[35m"
+# define CYAN    "\033[36m"
+# define WHITE   "\033[37m"
+# define BOLDBLACK   "\033[1m\033[30m"
+# define BOLDRED     "\033[1m\033[31m"
+# define BOLDGREEN   "\033[1m\033[32m"
+# define BOLDYELLOW  "\033[1m\033[33m"
+# define BOLDBLUE    "\033[1m\033[34m"
+# define BOLDMAGENTA "\033[1m\033[35m"
+# define BOLDCYAN    "\033[1m\033[36m"
+# define BOLDWHITE   "\033[1m\033[37m"
 
+sem_t					*g_semaphore;
+sem_t					*g_semaphore_msg;
+sem_t					*g_semaphore_end;
 
-sem_t	*g_semaphore;
-sem_t	*g_semaphore_msg;
-sem_t	*g_semaphore_end;
-
-typedef enum	e_colour
+typedef enum			e_colour
 {
 	Reset = 0,
 	Green = 1,
@@ -64,18 +76,18 @@ typedef enum	e_colour
 	Cyan = 4,
 	BoldYellow = 5,
 	Bolded = 6
-}				t_colour;
+}						t_colour;
 
-typedef struct	s_param
+typedef struct			s_param
 {
-	int		number_of_philosophers;
-	int 	time_to_die;
-	int 	time_to_eat;
-	int 	time_to_sleep;
-	int 	number_of_times_each_philosopher_must_eat;
-}				t_param;
+	int					number_of_philosophers;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					number_of_times_each_philosopher_must_eat;
+}						t_param;
 
-typedef struct	s_phil
+typedef struct			s_phil
 {
 	int					time_to_sleep;
 	int					time_to_eat;
@@ -89,31 +101,36 @@ typedef struct	s_phil
 	struct timeval		start_time;
 	int					num_phil;
 	struct timeval		last_eat;
-}				t_phil;
+}						t_phil;
 
-/*core function*/
+/*
+**core function
+*/
 
-void		ft_error(char *s);
-int			param_init(t_param *param, int ac, char **av);
-t_phil		*phil_init(t_param param);
-int			create_thread(t_phil *phil, t_param param);
-void		*dinner(void *argc);
-int			phil_full_msg(int time, int phil, char *msg);
-size_t		get_time(struct timeval time_old, struct timeval time_new);
-void		my_usleep(size_t time);
-int			phil_fork(t_param param, t_phil *phil);
-int			looking_after_the_phil(t_phil *phil);
-void		action(t_phil *phil, char *act, t_colour color);
-/*utils function*/
+void					ft_error(char *s);
+int						param_init(t_param *param, int ac, char **av);
+t_phil					*phil_init(t_param param);
+int						create_thread(t_phil *phil, t_param param);
+void					*dinner(void *argc);
+int						phil_full_msg(int time, int phil, char *msg);
+long long int			get_time(struct timeval time_old,
+						struct timeval time_new);
+void					my_usleep(size_t time);
+int						phil_fork(t_param param, t_phil *phil);
+int						looking_after_the_phil(t_phil *phil);
+void					action(t_phil *phil, char *act, t_colour color);
 
-size_t		ft_strlen(const char *s);
-int			ft_atoi(const char *str);
-void		ft_putnbr(int n);
-void		ft_putchar(char c);
-void		ft_putstr(const char *s);
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_itoa(int n);
-char		*ft_strdup(const char *src);
-//void		print_int(int a, int b);
+/*
+**utils function
+*/
+
+size_t					ft_strlen(const char *s);
+int						ft_atoi(const char *str);
+void					ft_putnbr(int n);
+void					ft_putchar(char c);
+void					ft_putstr(const char *s);
+char					*ft_strjoin(char const *s1, char const *s2);
+char					*ft_itoa(int n);
+char					*ft_strdup(const char *src);
 
 #endif
